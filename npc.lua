@@ -387,7 +387,7 @@ function npc.loadBee(x, y)
                         bee.get_hprects()
                         if (bee.visual.x - (mapoffset-bee.visual.width)) < 0 then
                             bee.stop = true
-                            character.health = character.health - 10
+                            character.health = character.health - 15
                             update_health(character.health/character.mhealth)
                             npc.remove(bee)
                         end
@@ -582,7 +582,7 @@ function npc.loadPoacher(x, y)
                             poacher.get_hprects()
                             if (poacher.visual.x - (mapoffset - poacher.visual.width)) < 0 then
                                 poacher.stop = true
-                                character.health = character.health - 15
+                                character.health = character.health - 20 
                                 update_health(character.health/character.mhealth)
                                 npc.remove(poacher)
                             end
@@ -778,7 +778,7 @@ function npc.loadPorcupine(x, y)
                             porcupine.get_hprects()
                             if (porcupine.visual.x - (mapoffset - porcupine.visual.width)) < 0 then
                                 porcupine.stop = true
-                                character.health = character.health - 5
+                                character.health = character.health - 10 
                                 update_health(character.health/character.mhealth)
                                 npc.remove(porcupine)
                             end
