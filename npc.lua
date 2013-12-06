@@ -316,14 +316,14 @@ function npc.loadDestructor(x, y, map)
     destructor.hrect = display.newRect(x+115,y+1,4,38)
     destructor.hrect:setFillColor(255,0,0)
 
-    destructor.mhealth = 500.0
+    destructor.mhealth = 600.0
     destructor.health = destructor.mhealth
 
     destructor.screwup = false
 
     destructor.hide_hprects(0.0)
 
-    destructor.speed = 5
+    destructor.speed = 7
 
     destructor.name = "boss"
     destructor.stop = true
