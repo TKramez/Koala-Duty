@@ -6,15 +6,21 @@
 -- Purpose: Serve as the main level demonstrating Koala Duty.
 ----------------------------------------------------------------------------------
 
---local storyboard = require("storyboard")
 local scene = storyboard.newScene()
+    
+
+local physics = require("physics")
+physics.start()
 
 local map = lime.loadMap("testLevel/testLevel_other.tmx")
-local visual
-local physical
+local visual = lime.createVisual(map)
+local physical = lime.buildPhysical(map)
 isBossSpawned = false
 
-physics = require("physics")
+mapoffset = 0
+distance = 8
+spawntimer = nil
+spawnrand = math.random(1,5) * 8
 
 ----------------------------------------------------------------------------------
 --
@@ -114,19 +120,10 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene(event)
-	physics.start()
-    map = lime.loadMap("testLevel/testLevel_other.tmx")
-    visual = lime.createVisual(map)
-    physical = lime.buildPhysical(map)
 	local group = self.view
-    mapoffset = 0
-    distance = 8
-    spawntimer = nil
-    spawnrand = math.random(1,5) * 8
 
     map:move(40, 0)
     mapoffset = mapoffset + 40
-	local group = self.view
 	control.draw()
 
 	character.loadKoala(50, 50, map)
@@ -169,7 +166,6 @@ function scene:exitScene( event )
     remove_lives()
     remove_health()
     remove_cooldown()
-    print("Hello")
 	-----------------------------------------------------------------------------
 
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)

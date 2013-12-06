@@ -5,7 +5,6 @@
 -- Evan J. Travis
 -- Eric Noble
 ----------------------------------------------------------------------------------
-local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
 -- include Corona's "widget" library

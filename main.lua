@@ -12,7 +12,6 @@ storyboard = require "storyboard"
 display.setStatusBar(display.HiddenStatusBar)
 
 lime = require("lime.lime")
-lime.enableDebugMode()
 system.activate("multitouch")
 
 joyStickLib = require("lib_analog_stick")
@@ -111,11 +110,10 @@ function update_health(percent)
         character.resetHealth()
         percent = 1
         if lives == 0 then
-            print("Game over")
-            --storyboard.gotoScene("game_over")
+            storyboard.gotoScene("game_over")
             lives = 3
         elseif not isBossSpawned then
-            --storyboard.gotoScene("testLevel.testLevel")
+            storyboard.gotoScene("continue")
         end
     end
     fhealth.width = percent * 116

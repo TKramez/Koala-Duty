@@ -5,7 +5,6 @@
 -- Authors: Eric Noble and Evan Travis
 -- Purpose: Provide a screen for instructions.
 ----------------------------------------------------------------------------------
-local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
 -- include Corona's "widget" library
