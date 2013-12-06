@@ -1,5 +1,4 @@
-----------------------------------------------------------------------------------
---
+
 -- testLevel.lua
 --
 -- Authors: Eric Noble and Tyler Kramer
@@ -36,10 +35,16 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene(event)
     local group = self.view
+	
 
-    group:insert(display.newText("Game Over", display.contentWidth / 2, display.contentHeight / 2, system.nativefont, 32))
-    group:insert(display.newText("Touch anywhere to play again", 100, 100, system.nativefont, 16))
-    Runtime:addEventListener( "touch", restart)
+	local koala =  display.newImage("Koala_standing.png" )
+	koala:translate(100,100)
+	
+	
+    group:insert(display.newText("Game Over", 100, 60, system.nativefont, 32))
+    group:insert(display.newText("Thank you for playing!", 100, 100, system.nativefont, 16))	
+    group:insert(display.newText("Touch anywhere to play again", 100, 200, system.nativefont, 16))
+	Runtime:addEventListener( "touch", restart)
 
     -----------------------------------------------------------------------------
 
@@ -53,7 +58,13 @@ end
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
     local group = self.view
-    Runtime:removeEventListener("touch", restart)
+	
+	if (koala ~=nil) then
+		koala:removeSelf()
+		koala = nil
+	end
+    
+	Runtime:removeEventListener("touch", restart)
 
     -----------------------------------------------------------------------------
 
@@ -98,3 +109,4 @@ scene:addEventListener( "destroyScene", scene )
 ---------------------------------------------------------------------------------
 
 return scene
+
