@@ -284,10 +284,12 @@ function npc.loadDestructor(x, y)
             destructor.dying = true
             destructor.stop = true
             destructor.health = 0
-            destructor.visual:setSequence("die")
-            destructor.visual:play()
+            --destructor.visual:setSequence("die")
+            --destructor.visual:play()
             local closure = function () return npc.delay_death(destructor) end
             timer.performWithDelay(200, closure, 1)
+        else
+            destructor.get_hprects()
         end
         return destructor.health
     end
