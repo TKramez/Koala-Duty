@@ -163,6 +163,9 @@ function control.remove()
 	control.jumpButton:removeSelf()
 	control.jumpButton = nil
 
+    control.shootButton:removeSelf()
+    control.shootButton = nil
+
 	control.character = nil
 end
 

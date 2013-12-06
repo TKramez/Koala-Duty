@@ -22,7 +22,7 @@ local logo
 local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
-	storyboard.gotoScene( "testLevel.testLevel", "fade", 500 )
+	storyboard.gotoScene( "testLevel.testLevel")
 	
 	return true	-- indicates successful touch
 end

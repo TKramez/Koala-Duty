@@ -8,7 +8,7 @@
 
 debug = false
 
-local storyboard = require "storyboard"
+storyboard = require "storyboard"
 display.setStatusBar(display.HiddenStatusBar)
 
 lime = require("lime.lime")
@@ -88,6 +88,16 @@ function place_health()
 end
 
 --[[
+    remove_health removes the healthbar on screen.
+]]--
+function remove_health()
+    bhealth:removeSelf()
+    bhealth = nil
+    fhealth:removeSelf()
+    fhealth = nil
+end
+
+--[[
     update_health updates the size of the inner health bar
     to reflect the passed percentage of health.
 ]]--
@@ -102,6 +112,9 @@ function update_health(percent)
         if lives == 0 then
             print("Game over")
             storyboard.gotoScene("game_over")
+            lives = 3
+        else
+            storyboard.gotoScene("testLevel.testLevel")
         end
     end
     fhealth.width = percent * 116
@@ -123,6 +136,16 @@ function place_cooldown()
     fcool.x = display.contentWidth - 12
     fcool.y = 30
     fcool:setFillColor(120,140,255)
+end
+
+--[[
+    remove_cooldown removes the cooldown on screen.
+]]--
+function remove_cooldown()
+    bcool:removeSelf()
+    bcool = nil
+    fcool:removeSelf()
+    fcool = nil
 end
 
 --[[
