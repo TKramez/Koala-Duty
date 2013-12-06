@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32">
+  <image source="test_tiles.png" width="224" height="192"/>
+  <tile id="0">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="43" name="bkgrd_Jungle-1" tilewidth="960" tileheight="532">
+  <image source="bkgrd_jungle-1.png" width="960" height="532"/>
+ </tileset>
+ <layer name="Background" width="100" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztzTENAAAIA7D5wb8/RCzhIK2BJgAAADfG+/qls7A/AK0=
+  </data>
+ </layer>
+ <layer name="Stage" width="100" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzt0ckNACAQxDCuB/TfMEsXg+RIriCtSZKk3+tlEWGUXSYRjh9R/MjiR5b34wIi7gZo
+  </data>
+ </layer>
+</map>

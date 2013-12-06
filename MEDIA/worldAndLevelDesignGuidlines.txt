@@ -1,0 +1,7 @@
+World/ Level Design
+	3 levels per world
+		4th level (boss) appears after 3 are won
+		when 4th level is beaten, allow access to next world
+		
+	2 Jungle worlds -- change aesthetic somehow (dark to light(er)?)
+	1 City world

@@ -1,0 +1,16 @@
+Declaration of Assets for Koala Duty
+
+Item                    Credit
+
+Game Concept            Zach Alexander, Evan Travis
+                        Tyler Kramer, Eric Noble.
+
+Character Concepts      Evan Travis, Zach Alexander,
+                        Tyler Kramer.
+Concept Artwork         Eric Noble
+All Images              Eric Noble
+All Spritesheets        Eric Noble
+Tileset                 Eric Noble
+
+lib_analog_stick.lua    x-pressive.com
+    "developer.coronalabs.com/code/simple-analog-stick-joystick-module"

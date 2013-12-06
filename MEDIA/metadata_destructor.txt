@@ -1,0 +1,44 @@
+Notes 
+  -- multiply all base values by the resolution
+  -- in other words, MULTIPLY ALL NUMBER VALUES BY 2!!! 
+  -- offsets are given in relation to the TOPLEFT point
+       of the frame.
+	   
+Right Arm:
+  x-position: BODY.x - 32
+  y-position: BODY.y - 50
+	   
+Body:
+  x-position: BODY.x
+  y-position: BODY.y
+
+Left Arm:
+  x-position: BODY.x + 22
+  y-position: BODY.y - 36
+  
+  
+  
+ss_arm:
+  total_width = 477
+  total_height = 680
+  frame_width = 159
+  frame_height = 68
+  
+  idle: {1, 2, 3, 4, 2}
+  start_fly: {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
+  fly_loop: {15, 16}
+  stop_fly: {17, 18, 19, 20, 21}
+  start_lazer: {22, 23, 24, 25}
+  lazer_loop: {26, 27}
+  stop_lazer: {25, 24, 23, 28, 22}
+
+ss_body:
+  total_width = 228
+  total_height = 472
+  frame_width = 76
+  frame_height = 106
+
+  idle: {1, 2, 3, 4, 5, 6}
+  forward: {7, 8, 9}
+  backward: {10, 11, 12}
+

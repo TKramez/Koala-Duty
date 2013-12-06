@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="200" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32">
+  <image source="test_tiles.png" width="224" height="192"/>
+  <tile id="0">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="HasBody" value=""/>
+    <property name="bodyType" value="static"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="43" name="bkgrd_Jungle-1" tilewidth="960" tileheight="532">
+  <image source="bkgrd_jungle-1.png" width="960" height="532"/>
+ </tileset>
+ <layer name="Background" width="200" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAEAEEV5NC/nwRWBncF/iMAAAAAAPgqrwcAWFe6urqjBr+SAT8=
+  </data>
+ </layer>
+ <layer name="Objects" width="200" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztk9sKgzAMQKu76eMetuH0B/b/P7gUDHRlGYKRunIOHFptmtRIQwAAAAAAAAAAAACAf+QmHld6FU/i2dGL09lqNPb7nvgwxkZss3c6T2OsOq1Ro8nW09w1/bPY54OTW+B1thpdQif2C2KsGtbe7sd66b7s1S0o/U17dhBH8Tk7fhn1fsTnSXzN6l6NsWr0SX7NOYXP+zFkMaX74u0bfNAL7w==
+  </data>
+ </layer>
+ <layer name="Foreground" width="200" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztkcsOgjAQRVkruhAXSn1skP//RC9JZ9M0YdqpjpJ7kpMmtPOk6wghhBBCCCGEEPJLXLwbaITXHC3rbuVffJJv7egOH/BZ8FbOhR3cw76hB3hU9pJSO0dpHU1dbWwuV22sN2nfa3NYdmTNqXk3wRecFfnkrZzCCQ4NPRf0kmKZo6SOpq42NperNtabtO+1OSw7sub81x0TsiWucIQhnou3+D1k7kK8HzPKHSHevAGc3Q3Y
+  </data>
+ </layer>
+</map>

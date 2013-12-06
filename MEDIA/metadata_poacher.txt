@@ -1,0 +1,16 @@
+Notes 
+  -- multiply all base values by the resolution
+  -- in other words, MULTIPLY ALL NUMBER VALUES BY 2!!! 
+ 
+ss_poacher:
+  total_width = 342
+  total_height = 530
+  frame_width = 57
+  frame_height = 53
+
+  stand: {1}
+  walkcycle: {2, 3, 4, 5}
+  attack: {1, 6, 7, 8, 9, 10}
+  die: {1, 11, 12, 13, 14, 15}
+
+

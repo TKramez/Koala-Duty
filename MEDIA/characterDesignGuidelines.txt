@@ -1,0 +1,11 @@
+Enemy Design
+	I-Beamer --> boss
+		Hammer minions
+		
+	Nailer --> boss
+		Nail gun minions
+		
+	CEO --> boss (is he a cat?)
+		corporate nerds
+			tie-whips?
+			briefcases?
