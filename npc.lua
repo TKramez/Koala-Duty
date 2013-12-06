@@ -181,21 +181,105 @@ function npc.loadDestructor(x, y)
 
     destructor.moveRight = function()
         destructor.visual.xScale = 1
+        destructor.body.visual:setSequence("backward")
+        destructor.body.visual:play()
         destructor.visual.x = destructor.visual.x - destructor.speed
         destructor.get_rect()
         destructor.get_hprects()
     end
     destructor.moveLeft = function()
         destructor.visual.xScale = 1
+        destructor.body.visual:setSequence("forward")
+        destructor.body.visual:play()
         destructor.visual.x = destructor.visual.x - destructor.speed
         destructor.get_rect()
         destructor.get_hprects()
     end
 
+    destructor.attack = function()
+        if not destructor.dying then
+            local chance = math.random(100)
+            local selected = math.random(2)
+            local arm
+            if selected == 1 then
+                arm = destructor.leftArm.visual
+            else
+                arm = destructor.rightArm.visual
+            end
+
+            local delay = 5000 / (destructor.mhealth / destructor.health)
+
+            if chance < 50 then
+                arm:setSequence("start_lazer")
+                arm:play()
+                listener = function(event)
+                    if event.phase == "ended" then
+                        print("Pew")
+                        arm:setSequence("lazer_loop")
+                        arm:play()
+                        arm:removeEventListener("sprite", listener)
+                        anotherListener = function(event)
+                            if event.phase == "loop" then
+                                arm:setSequence("stop_lazer")
+                                arm:play()
+                                arm:removeEventListener("sprite", anotherListener)
+                                thirdListener = function(event)
+                                    arm:setSequence("idle")
+                                    arm:play()
+                                    arm:removeEventListener("sprite", thirdListener)
+                                    timer.performWithDelay(delay, destructor.attack)
+                                end
+                                arm:addEventListener("sprite", thirdListener)
+                            end
+                        end
+                        arm:addEventListener("sprite", anotherListener)
+                    end
+                end
+                arm:addEventListener("sprite", listener)
+            else
+                arm:setSequence("start_fly")
+                arm:play()
+                listener = function(event)
+                    if event.phase == "ended" then
+                        arm:setSequence("fly_loop")
+                        arm:play()
+                        arm:removeEventListener("sprite", listener)
+                        starting = arm.x
+                        count = 0
+                        anotherListener = function(event)
+                            local flying = function()
+                                arm.x = arm.x - 10
+                            end
+                            local flyTimer = timer.performWithDelay(20, flying, 10)
+                            if event.phase == "loop" and count == 4 then
+                                timer.cancel(flyTimer)
+                                arm.x = starting
+                                arm:setSequence("stop_fly")
+                                arm:play()
+                                arm:removeEventListener("sprite", anotherListener)
+                                thirdListener = function(event)
+                                    arm:setSequence("idle")
+                                    arm:play()
+                                    arm:removeEventListener("sprite", thirdListener)
+                                    timer.performWithDelay(delay, destructor.attack)
+                                end
+                                arm:addEventListener("sprite", thirdListener)
+                            elseif event.phase == "loop" then
+                                count = count + 1
+                            end
+                        end
+                        arm:addEventListener("sprite", anotherListener)
+                    end
+                end
+                arm:addEventListener("sprite", listener)
+            end
+        end
+    end
+
     destructor.bossFight = function()
-        print("WE'RE ALL GOING TO DIE!")
         destructor.get_rect()
         destructor.get_hprects()
+        timer.performWithDelay(5000, destructor.attack)
     end
 
     destructor.body.visual:setSequence("idle")
@@ -275,7 +359,6 @@ function npc.loadDestructor(x, y)
         faded after a delay.
     ]]--
     destructor.adjust_health = function(amt)
-        print(amt)
         destructor.health = destructor.health + amt
         if destructor.health <= 0 and not destructor.dying then
             if destructor.dtimer ~= nil then timer.cancel(destructor.dtimer) end
@@ -284,14 +367,19 @@ function npc.loadDestructor(x, y)
             destructor.dying = true
             destructor.stop = true
             destructor.health = 0
-            --destructor.visual:setSequence("die")
-            --destructor.visual:play()
+            timer.performWithDelay(200, destructor.die, 10)
             local closure = function () return npc.delay_death(destructor) end
-            timer.performWithDelay(200, closure, 1)
+            timer.performWithDelay(2000, closure, 1)
         else
             destructor.get_hprects()
         end
         return destructor.health
+    end
+
+    destructor.die = function()
+        destructor.leftArm.visual.y = destructor.leftArm.visual.y + 10
+        destructor.rightArm.visual.y = destructor.rightArm.visual.y + 10
+        destructor.visual.alpha = math.max(destructor.visual.alpha - .1, 0)
     end
 
 
@@ -312,6 +400,8 @@ function npc.loadDestructor(x, y)
 
     destructor.screwup = false
 
+    physics.addBody(destructor.leftArm.visual, "static", {isSensor = true})
+    physics.addBody(destructor.rightArm.visual, "static", {isSensor = true})
 
     destructor.hide_hprects(0.0)
 
@@ -582,7 +672,7 @@ function npc.loadPoacher(x, y)
                             poacher.get_hprects()
                             if (poacher.visual.x - (mapoffset - poacher.visual.width)) < 0 then
                                 poacher.stop = true
-                                character.health = character.health - 20 
+                                character.health = character.health - 20
                                 update_health(character.health/character.mhealth)
                                 npc.remove(poacher)
                             end
@@ -778,7 +868,7 @@ function npc.loadPorcupine(x, y)
                             porcupine.get_hprects()
                             if (porcupine.visual.x - (mapoffset - porcupine.visual.width)) < 0 then
                                 porcupine.stop = true
-                                character.health = character.health - 10 
+                                character.health = character.health - 10
                                 update_health(character.health/character.mhealth)
                                 npc.remove(porcupine)
                             end

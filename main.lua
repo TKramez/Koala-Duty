@@ -44,6 +44,7 @@ bhealth = nil
 fhealth = nil
 bcool = nil
 fcool = nil
+isBossSpawned = false
 
 --[[
     place_lives places a number of life icons equivalent to the
@@ -111,10 +112,10 @@ function update_health(percent)
         percent = 1
         if lives == 0 then
             print("Game over")
-            storyboard.gotoScene("game_over")
+            --storyboard.gotoScene("game_over")
             lives = 3
-        else
-            storyboard.gotoScene("testLevel.testLevel")
+        elseif not isBossSpawned then
+            --storyboard.gotoScene("testLevel.testLevel")
         end
     end
     fhealth.width = percent * 116

@@ -12,6 +12,7 @@ local scene = storyboard.newScene()
 local map = lime.loadMap("testLevel/testLevel_other.tmx")
 local visual
 local physical
+isBossSpawned = false
 
 physics = require("physics")
 
@@ -29,6 +30,7 @@ physics = require("physics")
 ---------------------------------------------------------------------------------
 
 function spawn_boss()
+    isBossSpawned = true
     local destructor = npc.loadDestructor(0, 0)
     local layer = map:getTileLayer("Objects")
     layer:addObject(destructor.visual)

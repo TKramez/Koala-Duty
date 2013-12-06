@@ -238,7 +238,6 @@ function character.detect_shot(shot_i)
                         timer.performWithDelay(15, closure)
                      end
                      local health = v.adjust_health(-character.dmg)
-                     print(health)
                      if (v.dtimer == nil) then
                          v.hide_hprects(1.0)
                          v.delay_fadeout()
