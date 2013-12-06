@@ -18,10 +18,10 @@ local livetxt
 -- forward declarations and other locals
 
 local function onCont()
-	
+
 	-- go to level1.lua scene
 	storyboard.gotoScene( "testLevel.testLevel")
-	
+
 	return true	-- indicates successful touch
 end
 
@@ -29,10 +29,10 @@ end
 
 -------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
--- 
+--
 -- NOTE: Code outside of listener functions (below) will only be executed once,
 --		 unless storyboard.removeScene() is called.
--- 
+--
 -------------------------------------------------------------------------------
 
 -- Called when the scene's view does not exist:
@@ -49,16 +49,16 @@ function scene:enterScene( event )
     liveimg.x = display.contentWidth/2 - 26
     liveimg.y = display.contentHeight/2
     livetxt = display.newText(" x "..lives, 0, 0, native.systemFont, 16)
-    livetxt.x = display.contentWidth/2 + 2 
+    livetxt.x = display.contentWidth/2 + 2
     livetxt.y = display.contentHeight/2
-	
+
 	-- all display objects must be inserted into group
     group:insert( liveimg )
     group:insert( livetxt )
     timer.performWithDelay(1000, onCont, 1)
-	
+
 	-- INSERT code here (e.g. start timers, load audio, start listeners, etc.)
-	
+
 end
 
 -- Called when scene is about to move offscreen:
@@ -68,15 +68,15 @@ function scene:exitScene( event )
     liveimg = nil
     livetxt:removeSelf()
     livetxt = nil
-	
+
 	-- INSERT code here (e.g. stop timers, remove listenets, unload sounds, etc.)
-	
+
 end
 
 -- If scene's view is removed, scene:destroyScene() will be called just prior to:
 function scene:destroyScene( event )
 	local group = self.view
-	
+
 end
 
 -------------------------------------------------------------------------------
