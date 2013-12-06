@@ -28,11 +28,7 @@ end
 ]]--
 function artificialIntelligence.add(object)
     object.stop = false
-    if object.name == "boss" then
-        object.bossFight()
-    else
-	   doMovement(object, 20, false)
-    end
+	doMovement(object, 20, false)
 
     table.insert(artificialIntelligence.enemies, object)
 end

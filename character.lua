@@ -231,7 +231,7 @@ function character.detect_shot(shot_i)
 
              if (l or r or u or d) then
                  if not v.dying then
-                     print(v.name)
+                     --print(v.name)
                      if v.name ~= "boss" then
                         v.visual:setFillColor(255,0,0)
                         local closure = function () return character.revert_color(v) end

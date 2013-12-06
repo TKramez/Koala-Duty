@@ -37,12 +37,11 @@ spawnrand = math.random(1,5) * 8
 
 function spawn_boss()
     isBossSpawned = true
-    local destructor = npc.loadDestructor(0, 0)
+    local destructor = npc.loadDestructor(0, 0, map)
     local layer = map:getTileLayer("Objects")
     layer:addObject(destructor.visual)
-    destructor.visual.x = math.abs((map.width - 5) * 32)
+    destructor.visual.x = math.abs((map.width - 2) * 32)
     destructor.visual.y = 110
-    ai.removeall()
     ai.add(destructor)
 end
 
@@ -166,6 +165,7 @@ function scene:exitScene( event )
     remove_lives()
     remove_health()
     remove_cooldown()
+    --print("Hello")
 	-----------------------------------------------------------------------------
 
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)

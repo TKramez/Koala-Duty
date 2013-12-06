@@ -21,7 +21,7 @@ end
     the passed coordinates.
     The function returns a destructor object.
 ]]--
-function npc.loadDestructor(x, y)
+function npc.loadDestructor(x, y, map)
     local destructor = {}
     destructor.leftArm = npc.load("MEDIA/ss_Destructor-Arm.png",
         {
@@ -194,92 +194,13 @@ function npc.loadDestructor(x, y)
         destructor.visual.x = destructor.visual.x - destructor.speed
         destructor.get_rect()
         destructor.get_hprects()
-    end
 
-    destructor.attack = function()
-        if not destructor.dying then
-            local chance = math.random(100)
-            local selected = math.random(2)
-            local arm
-            if selected == 1 then
-                arm = destructor.leftArm.visual
-            else
-                arm = destructor.rightArm.visual
-            end
-
-            local delay = 5000 / (destructor.mhealth / destructor.health)
-
-            if chance < 50 then
-                arm:setSequence("start_lazer")
-                arm:play()
-                listener = function(event)
-                    if event.phase == "ended" then
-                        print("Pew")
-                        arm:setSequence("lazer_loop")
-                        arm:play()
-                        arm:removeEventListener("sprite", listener)
-                        anotherListener = function(event)
-                            if event.phase == "loop" then
-                                arm:setSequence("stop_lazer")
-                                arm:play()
-                                arm:removeEventListener("sprite", anotherListener)
-                                thirdListener = function(event)
-                                    arm:setSequence("idle")
-                                    arm:play()
-                                    arm:removeEventListener("sprite", thirdListener)
-                                    timer.performWithDelay(delay, destructor.attack)
-                                end
-                                arm:addEventListener("sprite", thirdListener)
-                            end
-                        end
-                        arm:addEventListener("sprite", anotherListener)
-                    end
-                end
-                arm:addEventListener("sprite", listener)
-            else
-                arm:setSequence("start_fly")
-                arm:play()
-                listener = function(event)
-                    if event.phase == "ended" then
-                        arm:setSequence("fly_loop")
-                        arm:play()
-                        arm:removeEventListener("sprite", listener)
-                        starting = arm.x
-                        count = 0
-                        anotherListener = function(event)
-                            local flying = function()
-                                arm.x = arm.x - 10
-                            end
-                            local flyTimer = timer.performWithDelay(20, flying, 10)
-                            if event.phase == "loop" and count == 4 then
-                                timer.cancel(flyTimer)
-                                arm.x = starting
-                                arm:setSequence("stop_fly")
-                                arm:play()
-                                arm:removeEventListener("sprite", anotherListener)
-                                thirdListener = function(event)
-                                    arm:setSequence("idle")
-                                    arm:play()
-                                    arm:removeEventListener("sprite", thirdListener)
-                                    timer.performWithDelay(delay, destructor.attack)
-                                end
-                                arm:addEventListener("sprite", thirdListener)
-                            elseif event.phase == "loop" then
-                                count = count + 1
-                            end
-                        end
-                        arm:addEventListener("sprite", anotherListener)
-                    end
-                end
-                arm:addEventListener("sprite", listener)
-            end
+        if (destructor.visual.x - (mapoffset-destructor.visual.width)) < 0 then
+            destructor.stop = true
+            character.health = character.health - 100
+            update_health(character.health/character.mhealth)
+            npc.remove(destructor)
         end
-    end
-
-    destructor.bossFight = function()
-        destructor.get_rect()
-        destructor.get_hprects()
-        timer.performWithDelay(5000, destructor.attack)
     end
 
     destructor.body.visual:setSequence("idle")
@@ -395,17 +316,14 @@ function npc.loadDestructor(x, y)
     destructor.hrect = display.newRect(x+115,y+1,4,38)
     destructor.hrect:setFillColor(255,0,0)
 
-    destructor.mhealth = 1000.0
+    destructor.mhealth = 200.0
     destructor.health = destructor.mhealth
 
     destructor.screwup = false
 
-    physics.addBody(destructor.leftArm.visual, "static", {isSensor = true})
-    physics.addBody(destructor.rightArm.visual, "static", {isSensor = true})
-
     destructor.hide_hprects(0.0)
 
-    destructor.speed = 10
+    destructor.speed = 5
 
     destructor.name = "boss"
     destructor.stop = true
@@ -486,7 +404,7 @@ function npc.loadBee(x, y)
         bee.attack (not implemented)
     ]]--
     bee.attack = function()
-                    print "Bee says pew"
+                    --print "Bee says pew"
                  end
     --[[
         bee.get_rect returns the rect representing the bee's hitbox.  The
@@ -681,7 +599,7 @@ function npc.loadPoacher(x, y)
         poacher.attack (not implemented)
     ]]--
     poacher.attack = function()
-                        print "Poacher says pew."
+                        --print "Poacher says pew."
                      end
 
     --[[
@@ -877,7 +795,7 @@ function npc.loadPorcupine(x, y)
         porcupine.attack (not implemented)
     ]]--
     porcupine.attack = function()
-                        print "Porcupine says pew."
+                        --print "Porcupine says pew."
                      end
 
     --[[
@@ -959,7 +877,7 @@ function npc.loadPorcupine(x, y)
         and then faded after a delay.
     ]]--
     porcupine.adjust_health = function(amt)
-        print (amt)
+        --print (amt)
         porcupine.health = porcupine.health + amt
         if porcupine.health <= 0 and not porcupine.dying then
             if not porcupine.dtimer == nil then timer.cancel(porcupine.dtimer) end
