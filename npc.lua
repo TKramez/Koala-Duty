@@ -180,14 +180,22 @@ function npc.loadDestructor(x, y)
     )
 
     destructor.moveRight = function()
-        -- body
+        destructor.visual.xScale = 1
+        destructor.visual.x = destructor.visual.x - destructor.speed
+        destructor.get_rect()
+        destructor.get_hprects()
     end
     destructor.moveLeft = function()
-        -- body
+        destructor.visual.xScale = 1
+        destructor.visual.x = destructor.visual.x - destructor.speed
+        destructor.get_rect()
+        destructor.get_hprects()
     end
 
     destructor.bossFight = function()
         print("WE'RE ALL GOING TO DIE!")
+        destructor.get_rect()
+        destructor.get_hprects()
     end
 
     destructor.body.visual:setSequence("idle")
@@ -202,7 +210,115 @@ function npc.loadDestructor(x, y)
     destructor.visual:insert(destructor.body.visual)
     destructor.visual:insert(destructor.rightArm.visual)
 
+    destructor.get_rect = function()
+        destructor.rect.x = destructor.visual.x - mapoffset - destructor.visual.xScale * destructor.visual.width/2
+        destructor.rect.y = destructor.visual.y - destructor.visual.height/2
+
+        return destructor.rect
+    end
+    --[[
+        destructor.get_hprects returns the rects forming the hp bar for a
+        destructor.  The rects are first updated according to the destructor's
+        position and amount of health.
+    ]]--
+    destructor.get_hprects = function()
+        destructor.hbrect:setReferencePoint(display.TopCenterReferencePoint)
+        destructor.hrect:setReferencePoint(display.TopCenterReferencePoint)
+        destructor.hbrect.x = destructor.visual.x - mapoffset + destructor.visual.xScale * 39
+        destructor.hrect.x = destructor.visual.x - mapoffset + destructor.visual.xScale * 40
+        destructor.hbrect.y = destructor.visual.y
+
+        local hrecth = math.floor(destructor.health/destructor.mhealth * 36)
+        destructor.hrect.height = hrecth
+        if (hrecth <= 0) then
+            destructor.screwup = true
+        end
+        destructor.hrect.y = destructor.visual.y + 1 + (36-hrecth)
+
+
+        return hbrect,hrect
+    end
+    --[[
+        destructor.hide_hprects sets the alpha value of the destructor's hp_rects
+        to the passed value.
+    ]]--
+    destructor.hide_hprects = function(alpha)
+        destructor.hbrect.alpha = alpha
+        if destructor.screwup then
+            destructor.hrect.alpha = 0
+        else
+            destructor.hrect.alpha = alpha
+        end
+    end
+    --[[
+        delay_fadeout fades the hp_rects of the destructor after a set delay.
+    ]]--
+    destructor.delay_fadeout = function()
+        destructor.dtimer = timer.performWithDelay(800, destructor.fadeout_hprects, 1)
+    end
+    --[[
+        destructor.fadeout_hprects fades the hp_rects of the destructor gradually.
+    ]]--
+    destructor.fadeout_hprects = function()
+        local alpha = destructor.hrect.alpha - 0.2
+        if alpha >= 0 then
+            destructor.hide_hprects(alpha)
+            destructor.dtimer = timer.performWithDelay(40, destructor.fadeout_hprects, 1)
+        else
+            destructor.hide_hprects(0)
+            destructor.dtimer = nil
+        end
+    end
+    --[[
+        destructor.adjust_health adds the specified amt to the destructor's health.
+        Upon adjusting health, the health bars are unhidden and then
+        faded after a delay.
+    ]]--
+    destructor.adjust_health = function(amt)
+        print(amt)
+        destructor.health = destructor.health + amt
+        if destructor.health <= 0 and not destructor.dying then
+            if destructor.dtimer ~= nil then timer.cancel(destructor.dtimer) end
+            destructor.get_hprects()
+            destructor.delay_fadeout()
+            destructor.dying = true
+            destructor.stop = true
+            destructor.health = 0
+            destructor.visual:setSequence("die")
+            destructor.visual:play()
+            local closure = function () return npc.delay_death(destructor) end
+            timer.performWithDelay(200, closure, 1)
+        end
+        return destructor.health
+    end
+
+
+    local colfilter = {categoryBits = 8, maskBits = 1}
+    physics.addBody(destructor.visual, "static", {filter = colfilter, isSensor = true})
+
+    destructor.rect = display.newRect(x, y, 152, 236)
+    destructor.rect:setReferencePoint(display.TopLeftReferencePoint)
+    destructor.rect:setFillColor(255,255,255,hb_col)
+
+    destructor.hbrect = display.newRect(x+114,y,6,40)
+    destructor.hbrect:setFillColor(0,0,0)
+    destructor.hrect = display.newRect(x+115,y+1,4,38)
+    destructor.hrect:setFillColor(255,0,0)
+
+    destructor.mhealth = 1000.0
+    destructor.health = destructor.mhealth
+
+    destructor.screwup = false
+
+
+    destructor.hide_hprects(0.0)
+
+    destructor.speed = 10
+
     destructor.name = "boss"
+    destructor.stop = true
+    destructor.dying = false
+    destructor.deathcount = 8
 
     return destructor
 end
@@ -821,7 +937,7 @@ end
     npc.die causes the passed enemmy to blink and then be 'removed'.
 ]]--
 function npc.die(enemy)
-    if (enemy.deathcount == 0) then
+    if (enemy.deathcount == 0 or enemy.name == "boss") then
         npc.remove(enemy)
     else
         enemy.visual.alpha = enemy.deathcount % 2
@@ -845,8 +961,10 @@ end
     rest is to be removed after stopping physics.
 ]]--
 function npc.remove(enemy)
-    enemy.visual.alpha = 0
-    enemy.hide_hprects(0.0)
+    if enemy ~= nil then
+        enemy.visual.alpha = 0
+        enemy.hide_hprects(0.0)
+    end
 end
 
 return npc

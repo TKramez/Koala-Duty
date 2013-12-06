@@ -19,7 +19,6 @@ local function doMovement(object, num, isMoveRight)
 		object.moveLeft()
 
 		timer.performWithDelay(100, function() return doMovement(object, 20, false) end)
-
 	end
 end
 
@@ -34,8 +33,8 @@ function artificialIntelligence.add(object)
     else
 	   doMovement(object, 20, false)
     end
-    table.insert(artificialIntelligence.enemies, object)
 
+    table.insert(artificialIntelligence.enemies, object)
 end
 
 --[[
@@ -54,14 +53,17 @@ end
 ]]--
 function artificialIntelligence.removeall()
     for k,v in pairs(artificialIntelligence.enemies) do
-        v.visual:removeSelf()
-        v.visual = nil
-        v.rect:removeSelf()
-        v.rect = nil
-        v.hrect:removeSelf()
-        v.hrect = nil
-        v.hbrect:removeSelf()
-        v.hbrect = nil
+        if v ~= nil then
+            v.visual:removeSelf()
+            v.visual = nil
+            v.rect:removeSelf()
+            v.rect = nil
+            v.hrect:removeSelf()
+            v.hrect = nil
+            v.hbrect:removeSelf()
+            v.hbrect = nil
+            artificialIntelligence.enemies[k] = nil
+        end
     end
 end
 

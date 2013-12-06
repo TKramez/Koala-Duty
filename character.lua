@@ -223,7 +223,7 @@ end
 ]]--
 function character.detect_shot(shot_i)
      for k,v in pairs(ai.enemies) do
-         if not (v == nil) then
+         if (v ~= nil) then
              local l = character.is_intersect(shot_i[1], shot_i[2], shot_i[3], shot_i[4], v.rect.x, v.rect.y, v.rect.x, v.rect.y+v.rect.height)
              local r = character.is_intersect(shot_i[1], shot_i[2], shot_i[3], shot_i[4], v.rect.x+v.rect.width, v.rect.y, v.rect.x+v.rect.width, v.rect.y+v.rect.height)
              local u = character.is_intersect(shot_i[1], shot_i[2], shot_i[3], shot_i[4], v.rect.x, v.rect.y, v.rect.x+v.rect.width, v.rect.y)
@@ -232,10 +232,13 @@ function character.detect_shot(shot_i)
              if (l or r or u or d) then
                  if not v.dying then
                      print(v.name)
-                     v.visual:setFillColor(255,0,0)
-                     local closure = function () return character.revert_color(v) end
-                     timer.performWithDelay(15, closure)
-                     local health = v.adjust_health(0-character.dmg)
+                     if v.name ~= "boss" then
+                        v.visual:setFillColor(255,0,0)
+                        local closure = function () return character.revert_color(v) end
+                        timer.performWithDelay(15, closure)
+                     end
+                     local health = v.adjust_health(-character.dmg)
+                     print(health)
                      if (v.dtimer == nil) then
                          v.hide_hprects(1.0)
                          v.delay_fadeout()

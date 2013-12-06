@@ -33,13 +33,13 @@ spawnrand = math.random(1,5) * 8
 ---------------------------------------------------------------------------------
 
 function spawn_boss()
-    print("Boss time")
     local destructor = npc.loadDestructor(0, 0)
     local layer = map:getTileLayer("Objects")
     layer:addObject(destructor.visual)
     destructor.visual.x = math.abs((map.width - 5) * 32)
     destructor.visual.y = 110
-    print("Boss spawned")
+    ai.removeall()
+    ai.add(destructor)
 end
 
 function check_spawn_boss()
